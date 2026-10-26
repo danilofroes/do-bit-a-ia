@@ -791,6 +791,7 @@ code {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 1.25rem 2rem;
   margin: 0;
   padding: 1.25rem 1.5rem;
