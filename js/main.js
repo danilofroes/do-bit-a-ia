@@ -104,41 +104,63 @@
     desenhar();
   }
 
-  /* 3. Compartilhar ------------------------------------------------------------ */
+  /* 3. Compartilhar ------------------------------------------------------------
+     O link vai dentro do próprio texto: assim o WhatsApp mostra a prévia do
+     site e o endereço não aparece duplicado. */
 
-  const enderecoSite = () => location.href.split('#')[0];
+  const enderecoSite = () =>
+    document.querySelector('link[rel="canonical"]')?.href || location.href.split('#')[0];
 
   const compartilhar = async (texto) => {
-    const url = enderecoSite();
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'Do Bit à IA', text: texto, url });
+        await navigator.share({ text: texto });
         return;
       } catch (erro) {
         if (erro && erro.name === 'AbortError') return;
       }
     }
-    const link = `https://wa.me/?text=${encodeURIComponent(`${texto} ${url}`)}`;
-    window.open(link, '_blank', 'noopener');
+    window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
   };
 
-  const textoCurso =
-    'Curso gratuito de inteligência artificial na Nave do Conhecimento Penha: 3, 5 e 10 de novembro, das 18h às 21h. Não precisa saber programar!';
+  const textoCurso = () =>
+    [
+      '🤖 *Do Bit à IA: curso gratuito de inteligência artificial*',
+      '',
+      'Na Nave do Conhecimento Penha, dias 3, 5 e 10 de novembro, das 18h às 21h. Não precisa saber programar!',
+      '',
+      `Saiba mais e faça sua inscrição: ${enderecoSite()}`,
+    ].join('\n');
+
+  // O nome vai num bloco monoespaçado do WhatsApp (entre ```), com uma letra
+  // por linha para os zeros e uns ficarem alinhados. O curso entra só no fim.
+  const textoNome = (nome) => {
+    const linhas = [...nome].map((c) => `${c === ' ' ? '␣' : c}  ${paraBits(c)}`).join('\n');
+    return [
+      '🤖 *Meu nome na língua do computador:*',
+      '',
+      '```' + linhas + '```',
+      '',
+      `São ${nome.length * 8} bits. Cada 1 é um interruptor ligado lá dentro da máquina 💡`,
+      '',
+      `Faz o seu também 👉 ${enderecoSite()}`,
+      '',
+      '_Do Bit à IA, curso gratuito de IA na Nave do Conhecimento Penha_',
+    ].join('\n');
+  };
 
   document.getElementById('compartilhar-curso')?.addEventListener('click', () => {
-    compartilhar(textoCurso);
+    compartilhar(textoCurso());
   });
 
   document.getElementById('compartilhar-nome')?.addEventListener('click', () => {
     const digitado = textoValido().trim();
     if (!digitado) {
-      compartilhar(textoCurso);
+      resumo.textContent = 'Digite seu nome no campo acima para compartilhar.';
+      entrada.focus();
       return;
     }
-    const bits = [...digitado].map(paraBits).join(' ');
-    compartilhar(
-      `Meu nome em binário: ${bits}. Aprenda como o computador pensa no curso gratuito Do Bit à IA, na Nave do Conhecimento Penha.`
-    );
+    compartilhar(textoNome(digitado));
   });
 
   /* 4. Barra fixa ----------------------------------------------------------------
