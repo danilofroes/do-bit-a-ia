@@ -770,6 +770,57 @@ code {
   color: var(--tinta-suave);
 }
 
+/* convite para o grupo do WhatsApp, no fim das perguntas. O verde do
+   WhatsApp aqui é de propósito: o botão é reconhecido de longe. O texto
+   escuro sobre o verde garante leitura (o branco teria pouco contraste). */
+.grupo {
+  --verde: #25d366;
+  --verde-forte: #1fb859;
+  --verde-fundo: #e7f8ee;
+  --verde-borda: #b7e7c8;
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid var(--verde-borda);
+  border-radius: var(--raio-grande);
+  background: var(--verde-fundo);
+}
+
+@media (prefers-color-scheme: dark) {
+  .grupo {
+    --verde-fundo: #0f2419;
+    --verde-borda: #1f4a32;
+  }
+}
+
+.botao-whatsapp {
+  min-height: 3.25rem;
+  background: var(--verde);
+  color: #0b141a;
+  font-size: 1.125rem;
+}
+
+.botao-whatsapp:hover {
+  background: var(--verde-forte);
+}
+
+.grupo p {
+  max-width: 38rem;
+  margin-bottom: 1rem;
+}
+
+.botao .icone {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 47.99rem) {
+  .grupo .botao {
+    width: 100%;
+  }
+}
+
 /* --- rodapé --------------------------------------------------------------- */
 
 .rodape {
