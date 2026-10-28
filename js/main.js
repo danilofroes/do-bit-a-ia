@@ -127,7 +127,7 @@
     [
       '🤖 *Do Bit à IA: curso gratuito de inteligência artificial*',
       '',
-      'Na Nave do Conhecimento Penha, dias 3, 5 e 10 de novembro, das 18h às 21h. Não precisa saber programar!',
+      'Na Nave do Conhecimento Penha, dias 3, 5 e 10 de novembro, das 17h30 às 20h30. Não precisa saber programar!',
       '',
       `Saiba mais e faça sua inscrição: ${enderecoSite()}`,
     ].join('\n');
